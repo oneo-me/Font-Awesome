@@ -2,6 +2,6 @@
     <PropertyGroup>
         <TargetFramework>net461</TargetFramework>
         <LangVersion>latest</LangVersion>
-        <Version>19.12.29</Version>
+        <Version>20.1.1</Version>
     </PropertyGroup>
 </Project>

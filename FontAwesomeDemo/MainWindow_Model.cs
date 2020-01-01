@@ -1,56 +1,91 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using FontAwesome;
+using FontAwesomeDemo.Binder;
 
 namespace FontAwesomeDemo
 {
-    public class MainWindow_Model : INotifyPropertyChanged
+    public class MainWindow_Model : ViewModel
     {
-        public class Command : ICommand
-        {
-            public bool CanExecute(object parameter)
-            {
-                return true;
-            }
-
-            public void Execute(object parameter)
-            {
-                if (!(parameter is FontAwesomeIcon icon))
-                    return;
-
-                Clipboard.SetText($"{icon}");
-            }
-
-            public event EventHandler CanExecuteChanged;
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        public ObservableCollection<FontAwesomeIcon> Icons { get; set; }
+        public Version Version { get; }
         public ICommand CopyIconCommand { get; }
 
-        public Version Version
+        ObservableCollection<FontAwesomeIcon> source;
+
+        public ObservableCollection<FontAwesomeIcon> Source
         {
-            get => Assembly.GetEntryAssembly()?.GetName().Version;
+            get => source;
+            set => SetValue(ref source, value);
+        }
+
+        ObservableCollection<FontAwesomeIcon> searchIcons;
+
+        public ObservableCollection<FontAwesomeIcon> SearchIcons
+        {
+            get => searchIcons;
+            set => SetValue(ref searchIcons, value);
+        }
+
+        FontAwesomeIcon currentIcon = FontAwesomeIcon.None;
+
+        public FontAwesomeIcon CurrentIcon
+        {
+            get => currentIcon;
+            set => SetValue(ref currentIcon, value);
+        }
+
+        string searchText = string.Empty;
+
+        public string SearchText
+        {
+            get => searchText;
+            set => SetValue(ref searchText, value, OnSearchTextChanged);
+        }
+
+        bool searchState;
+
+        public bool SearchState
+        {
+            get => searchState;
+            set => SetValue(ref searchState, value);
         }
 
         public MainWindow_Model()
         {
-            CopyIconCommand = new Command();
-
-            Task.Run(() =>
+            Version = Assembly.GetEntryAssembly()?.GetName().Version;
+            CopyIconCommand = new Command(obj =>
             {
-                var items = Enum.GetValues(typeof(FontAwesomeIcon)).Cast<FontAwesomeIcon>().ToList();
-                items.Sort((a, b) => string.CompareOrdinal($"{a}", $"{b}"));
-                Icons = new ObservableCollection<FontAwesomeIcon>(items);
-
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Icons)));
+                if (!(obj is FontAwesomeIcon icon))
+                    return;
+                Clipboard.SetText($"{icon}");
             });
+
+            var result = Enum.GetValues(typeof(FontAwesomeIcon)).Cast<FontAwesomeIcon>().ToList();
+            result.Sort((a, b) => string.CompareOrdinal($"{a}", $"{b}"));
+            Source = new ObservableCollection<FontAwesomeIcon>(result);
+
+            OnSearchTextChanged();
+        }
+
+        void OnSearchTextChanged()
+        {
+            if (string.IsNullOrWhiteSpace(SearchText) || SearchText.Length < 2)
+            {
+                SearchIcons = new ObservableCollection<FontAwesomeIcon>();
+                CurrentIcon = Source.FirstOrDefault();
+                SearchState = SearchText.Length > 0;
+                return;
+            }
+
+            var keyWord = SearchText.ToLower();
+            var result = source.Where(x => $"{x}".ToLower().Contains(keyWord));
+            SearchIcons = new ObservableCollection<FontAwesomeIcon>(result);
+            CurrentIcon = SearchIcons.FirstOrDefault();
+            SearchState = true;
         }
     }
 }

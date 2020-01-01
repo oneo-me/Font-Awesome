@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:FontAwesomeDemo"
+    xmlns:converters="clr-namespace:FontAwesomeDemo.Converters"
     UseLayoutRounding="True" SnapsToDevicePixels="True"
     Title="{Binding Version, StringFormat=FontAwesomeDemo {0}}" WindowStartupLocation="CenterScreen"
     Width="800" Height="600">
@@ -12,69 +13,17 @@
     <Window.Icon>
         <FontAwesomeImageSource Icon="GitHub" />
     </Window.Icon>
-    <Border BorderThickness="0 1 0 0" BorderBrush="#19000000">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="260" />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <Border Grid.Column="0" BorderThickness="0 0 1 0" BorderBrush="#19000000">
-                <StackPanel Margin="10" VerticalAlignment="Center">
-                    <Border Width="120" Height="120">
-                        <FontAwesomePath Icon="{Binding ElementName=ListBox, Path=SelectedItem}" HorizontalAlignment="Center" />
-                    </Border>
-                    <Border Width="120" Height="120" Margin="0 20 0 0">
-                        <FontAwesomeAnimationPath Icon="{Binding ElementName=ListBox, Path=SelectedItem}" StrokeThickness="2" HorizontalAlignment="Center" />
-                    </Border>
-                    <TextBlock Margin="0 20" Text="{Binding ElementName=ListBox, Path=SelectedItem}" ToolTip="{Binding ElementName=ListBox, Path=SelectedItem}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" />
-                    <Button Content="Copy Enum Key" Padding="10 8" Command="{Binding CopyIconCommand}" CommandParameter="{Binding ElementName=ListBox, Path=SelectedItem}" HorizontalAlignment="Center" />
-                </StackPanel>
-            </Border>
-            <ListBox Grid.Column="1" x:Name="ListBox" ItemsSource="{Binding Icons}" SelectedIndex="0">
-                <ListBox.Style>
-                    <Style TargetType="ListBox">
-                        <Setter Property="BorderThickness" Value="1" />
-                        <Setter Property="ItemContainerStyle">
-                            <Setter.Value>
-                                <Style TargetType="ListBoxItem">
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="ListBoxItem">
-                                                <Border Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}">
-                                                    <ContentPresenter />
-                                                </Border>
-                                                <ControlTemplate.Triggers>
-                                                    <Trigger Property="IsMouseOver" Value="True">
-                                                        <Setter Property="Background" Value="#2F00ACAF" />
-                                                    </Trigger>
-                                                    <Trigger Property="IsSelected" Value="True">
-                                                        <Setter Property="Background" Value="#2F00ACAF" />
-                                                        <Setter Property="BorderBrush" Value="#00ACAF" />
-                                                    </Trigger>
-                                                </ControlTemplate.Triggers>
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
-                            </Setter.Value>
-                        </Setter>
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="ListBox">
-                                    <ScrollViewer HorizontalScrollBarVisibility="Disabled">
-                                        <ItemsPresenter />
-                                    </ScrollViewer>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </ListBox.Style>
-                <ListBox.ItemsPanel>
+    <Window.Resources>
+        <Style x:Key="ListBoxStyle" TargetType="ListBox">
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
                     <ItemsPanelTemplate>
                         <WrapPanel Margin="5" ItemWidth="82" ItemHeight="90" />
                     </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
-                <ListBox.ItemTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ItemTemplate">
+                <Setter.Value>
                     <DataTemplate>
                         <Grid Margin="5">
                             <Grid.RowDefinitions>
@@ -87,8 +36,82 @@
                             <TextBlock Grid.Row="1" Text="{Binding}" FontSize="10" ToolTip="{Binding}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" />
                         </Grid>
                     </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ItemContainerStyle">
+                <Setter.Value>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListBoxItem">
+                                    <Border Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}">
+                                        <ContentPresenter />
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#2F00ACAF" />
+                                        </Trigger>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Background" Value="#2F00ACAF" />
+                                            <Setter Property="BorderBrush" Value="#00ACAF" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBox">
+                        <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Border BorderThickness="0 1 0 0" BorderBrush="#19000000">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="260" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="0" BorderThickness="0 0 1 0" BorderBrush="#19000000">
+                <StackPanel Margin="10" VerticalAlignment="Center">
+                    <Border Width="120" Height="120">
+                        <Grid>
+                            <FontAwesomePath Icon="{Binding CurrentIcon}" Fill="#B200ACAF" HorizontalAlignment="Center" />
+                            <FontAwesomeAnimationPath Icon="{Binding CurrentIcon}" StrokeThickness="2" HorizontalAlignment="Center" StrokeLineJoin="Round" Stroke="#E5000000" />
+                        </Grid>
+                    </Border>
+                    <TextBlock Margin="0 20" Text="{Binding CurrentIcon}" ToolTip="{Binding CurrentIcon}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" />
+                    <Button Content="Copy Enum Key" Padding="10 8" Command="{Binding CopyIconCommand}" CommandParameter="{Binding CurrentIcon}" HorizontalAlignment="Center" />
+                </StackPanel>
+            </Border>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <ListBox Grid.Row="0" SelectedItem="{Binding CurrentIcon, Mode=TwoWay}" ItemsSource="{Binding Source}" Style="{StaticResource ListBoxStyle}" Visibility="{Binding SearchState, Converter={converters:Bool2VisibilityConverter Reversion=True}}" />
+                <ListBox Grid.Row="0" SelectedItem="{Binding CurrentIcon, Mode=TwoWay}" ItemsSource="{Binding SearchIcons}" Style="{StaticResource ListBoxStyle}" Visibility="{Binding SearchState, Converter={converters:Bool2VisibilityConverter}}" />
+                <Border Grid.Row="1" BorderThickness="0 1 0 0" BorderBrush="#19000000">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <FontAwesomePath Grid.Column="0" Icon="Search" Height="12" Margin="10 0 0 0" />
+                        <TextBox Grid.Column="1" BorderThickness="0" Padding="10" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Grid.Column="2" Text="{Binding Source.Count}" Margin="0 0 10 0" VerticalAlignment="Center" Visibility="{Binding SearchState, Converter={converters:Bool2VisibilityConverter Reversion=True}}" />
+                        <TextBlock Grid.Column="2" Text="{Binding SearchIcons.Count}" Margin="0 0 10 0" VerticalAlignment="Center" Visibility="{Binding SearchState, Converter={converters:Bool2VisibilityConverter}}" />
+                    </Grid>
+                </Border>
+            </Grid>
         </Grid>
     </Border>
 </Window>

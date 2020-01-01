@@ -61,7 +61,12 @@ namespace FontAwesomeDemo
             {
                 if (!(obj is FontAwesomeIcon icon))
                     return;
-                Clipboard.SetText($"{icon}");
+                var iconStr = $"{icon}";
+                Clipboard.SetText(iconStr);
+                var mainWindow = Application.Current.MainWindow;
+                if (mainWindow == null)
+                    return;
+                MessageBox.Show(mainWindow, $"Copy \"{iconStr}\" To Clipboard {(Clipboard.GetText() == iconStr ? "Success" : "Fail")}!", nameof(FontAwesomeDemo), MessageBoxButton.OK, MessageBoxImage.Information);
             });
 
             var result = Enum.GetValues(typeof(FontAwesomeIcon)).Cast<FontAwesomeIcon>().ToList();

@@ -11,13 +11,17 @@ namespace FontAwesome
 
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            var geometry = FontAwesomePathAttribute.GetPathData(Icon) ?? Geometry.Empty;
+            return Create(Icon, Brush);
+        }
 
+        public static ImageSource Create(FontAwesomeIcon icon, Brush brush)
+        {
+            var geometry = FontAwesomePathAttribute.GetPathData(icon) ?? Geometry.Empty;
             var visual = new DrawingVisual();
 
             using (var dc = visual.RenderOpen())
             {
-                dc.DrawGeometry(Brush, null, geometry);
+                dc.DrawGeometry(brush, null, geometry);
             }
 
             return new DrawingImage(visual.Drawing);

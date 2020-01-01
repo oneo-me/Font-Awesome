@@ -9,13 +9,14 @@ namespace FontAwesomeDemo.Converters
     public class Bool2VisibilityConverter : MarkupExtension, IValueConverter
     {
         public bool Reversion { get; set; }
+        public bool UseHidden { get; set; }
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var result = value is bool val && val;
             if (Reversion)
                 result = !result;
-            return result ? Visibility.Visible : Visibility.Hidden;
+            return result ? Visibility.Visible : UseHidden ? Visibility.Hidden : Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

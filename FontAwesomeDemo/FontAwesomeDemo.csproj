@@ -2,6 +2,7 @@
     <PropertyGroup>
         <UseWpf>true</UseWpf>
         <OutputType>WinExe</OutputType>
+        <ApplicationManifest>App.manifest</ApplicationManifest>
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\FontAwesome\FontAwesome.csproj" />

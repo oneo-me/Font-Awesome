@@ -14,6 +14,9 @@
         <FontAwesomeImageSource Icon="GitHub" />
     </Window.Icon>
     <Window.Resources>
+        <DataTemplate x:Key="IconDataTemplate">
+            <FontAwesomeAnimationPath Icon="{Binding}" Fill="#B200ACAF" StrokeThickness="1.5" HorizontalAlignment="Center" StrokeLineJoin="Round" Stroke="#E5000000" />
+        </DataTemplate>
         <Style x:Key="ListBoxStyle" TargetType="ListBox">
             <Setter Property="ItemsPanel">
                 <Setter.Value>
@@ -31,7 +34,7 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <Border Width="32" Height="32">
-                                <FontAwesomePath Icon="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                <FontAwesomePath Icon="{Binding}" Fill="#CC000000" HorizontalAlignment="Center" VerticalAlignment="Center" />
                             </Border>
                             <TextBlock Grid.Row="1" Text="{Binding}" FontSize="10" ToolTip="{Binding}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" />
                         </Grid>
@@ -82,13 +85,15 @@
             <Border Grid.Column="0" BorderThickness="0 0 1 0" BorderBrush="#19000000">
                 <StackPanel Margin="10" VerticalAlignment="Center">
                     <Border Width="120" Height="120">
-                        <Grid>
-                            <FontAwesomePath Icon="{Binding CurrentIcon}" Fill="#B200ACAF" HorizontalAlignment="Center" />
-                            <FontAwesomeAnimationPath Icon="{Binding CurrentIcon}" StrokeThickness="2" HorizontalAlignment="Center" StrokeLineJoin="Round" Stroke="#E5000000" />
-                        </Grid>
+                        <ContentControl Content="{Binding CurrentIcon}" ContentTemplate="{StaticResource IconDataTemplate}" />
                     </Border>
                     <TextBlock Margin="0 20" Text="{Binding CurrentIcon}" ToolTip="{Binding CurrentIcon}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" />
-                    <Button Content="Copy Enum Key" Padding="10 8" Command="{Binding CopyIconCommand}" CommandParameter="{Binding CurrentIcon}" HorizontalAlignment="Center" />
+                    <Button Padding="10 8" Command="{Binding CopyIconCommand}" CommandParameter="{Binding CurrentIcon}" HorizontalAlignment="Center">
+                        <StackPanel Orientation="Horizontal">
+                            <FontAwesomePath Icon="Copy" Width="12" Height="12" />
+                            <TextBlock Text="Copy Key" Margin="5 0 0 0" />
+                        </StackPanel>
+                    </Button>
                 </StackPanel>
             </Border>
             <Grid Grid.Column="1">
@@ -96,8 +101,8 @@
                     <RowDefinition />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <ListBox Grid.Row="0" SelectedItem="{Binding CurrentIcon, Mode=TwoWay}" ItemsSource="{Binding Source}" Style="{StaticResource ListBoxStyle}" Visibility="{Binding SearchState, Converter={converters:Bool2VisibilityConverter Reversion=True}}" />
-                <ListBox Grid.Row="0" SelectedItem="{Binding CurrentIcon, Mode=TwoWay}" ItemsSource="{Binding SearchIcons}" Style="{StaticResource ListBoxStyle}" Visibility="{Binding SearchState, Converter={converters:Bool2VisibilityConverter}}" />
+                <ListBox Grid.Row="0" SelectedItem="{Binding CurrentIcon, Mode=TwoWay}" ItemsSource="{Binding Source}" Style="{StaticResource ListBoxStyle}" Visibility="{Binding SearchState, Converter={converters:Bool2VisibilityConverter Reversion=True, UseHidden=True}}" />
+                <ListBox Grid.Row="0" SelectedItem="{Binding CurrentIcon, Mode=TwoWay}" ItemsSource="{Binding SearchIcons}" Style="{StaticResource ListBoxStyle}" Visibility="{Binding SearchState, Converter={converters:Bool2VisibilityConverter UseHidden=True}}" />
                 <Border Grid.Row="1" BorderThickness="0 1 0 0" BorderBrush="#19000000">
                     <Grid>
                         <Grid.ColumnDefinitions>

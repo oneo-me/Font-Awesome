@@ -10,7 +10,7 @@ namespace FontAwesomeDemo
         public IconInfo(FontAwesomeIcon icon)
         {
             Icon = icon;
-            Category = FontAwesomePathAttribute.GetCategory(icon);
+            Category = FontAwesomePathAttribute.GetCategory(icon) ?? "None";
         }
     }
 }

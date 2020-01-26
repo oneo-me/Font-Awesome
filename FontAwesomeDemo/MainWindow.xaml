@@ -14,10 +14,21 @@
         <FontAwesomeImageSource Icon="GitHub" />
     </Window.Icon>
     <Window.Resources>
+        <CollectionViewSource x:Key="SourceView" Source="{Binding Source}">
+            <CollectionViewSource.GroupDescriptions>
+                <PropertyGroupDescription PropertyName="Category" />
+            </CollectionViewSource.GroupDescriptions>
+        </CollectionViewSource>
+        <CollectionViewSource x:Key="SearchIconsView" Source="{Binding SearchIcons}">
+            <CollectionViewSource.GroupDescriptions>
+                <PropertyGroupDescription PropertyName="Category" />
+            </CollectionViewSource.GroupDescriptions>
+        </CollectionViewSource>
         <DataTemplate x:Key="IconDataTemplate" DataType="local:IconInfo">
             <FontAwesomeAnimationPath Icon="{Binding Icon}" Fill="#B200ACAF" StrokeThickness="1.5" HorizontalAlignment="Center" StrokeLineJoin="Round" Stroke="#E5000000" />
         </DataTemplate>
         <Style x:Key="ListBoxStyle" TargetType="ListBox">
+            <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
             <Setter Property="ItemsPanel">
                 <Setter.Value>
                     <ItemsPanelTemplate>
@@ -75,6 +86,10 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <DataTemplate x:Key="GroupHeaderDateTemplate">
+            <!-- ReSharper disable Xaml.BindingWithContextNotResolved -->
+            <TextBlock Text="{Binding Name}" Margin="10 5" FontSize="13" FontWeight="Bold" />
+        </DataTemplate>
     </Window.Resources>
     <Border BorderThickness="0 1 0 0" BorderBrush="#19000000">
         <Grid>
@@ -101,8 +116,28 @@
                     <RowDefinition />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <ListBox Grid.Row="0" SelectedItem="{Binding CurrentIcon, Mode=TwoWay}" ItemsSource="{Binding Source}" Style="{StaticResource ListBoxStyle}" Visibility="{Binding SearchState, Converter={converters:Bool2VisibilityConverter Reversion=True, UseHidden=True}}" />
-                <ListBox Grid.Row="0" SelectedItem="{Binding CurrentIcon, Mode=TwoWay}" ItemsSource="{Binding SearchIcons}" Style="{StaticResource ListBoxStyle}" Visibility="{Binding SearchState, Converter={converters:Bool2VisibilityConverter UseHidden=True}}" />
+                <ListBox Grid.Row="0" SelectedItem="{Binding CurrentIcon, Mode=TwoWay}" ItemsSource="{Binding Source={StaticResource SourceView}}" Style="{StaticResource ListBoxStyle}" Visibility="{Binding SearchState, Converter={converters:Bool2VisibilityConverter Reversion=True, UseHidden=True}}">
+                    <ListBox.GroupStyle>
+                        <GroupStyle HeaderTemplate="{StaticResource GroupHeaderDateTemplate}">
+                            <GroupStyle.Panel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Margin="0 5" />
+                                </ItemsPanelTemplate>
+                            </GroupStyle.Panel>
+                        </GroupStyle>
+                    </ListBox.GroupStyle>
+                </ListBox>
+                <ListBox Grid.Row="0" SelectedItem="{Binding CurrentIcon, Mode=TwoWay}" ItemsSource="{Binding Source={StaticResource SearchIconsView}}" Style="{StaticResource ListBoxStyle}" Visibility="{Binding SearchState, Converter={converters:Bool2VisibilityConverter UseHidden=True}}">
+                    <ListBox.GroupStyle>
+                        <GroupStyle HeaderTemplate="{StaticResource GroupHeaderDateTemplate}">
+                            <GroupStyle.Panel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Margin="0 5" />
+                                </ItemsPanelTemplate>
+                            </GroupStyle.Panel>
+                        </GroupStyle>
+                    </ListBox.GroupStyle>
+                </ListBox>
                 <Border Grid.Row="1" BorderThickness="0 1 0 0" BorderBrush="#19000000">
                     <Grid>
                         <Grid.ColumnDefinitions>

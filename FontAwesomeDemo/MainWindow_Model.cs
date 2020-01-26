@@ -93,7 +93,7 @@ namespace FontAwesomeDemo
             }
 
             var keyWord = SearchText.ToLower();
-            var result = source.Where(x => $"{x}".ToLower().Contains(keyWord));
+            var result = source.Where(x => $"{x.Icon}".ToLower().Contains(keyWord));
             SearchIcons = new ObservableCollection<IconInfo>(result);
             CurrentIcon = SearchIcons.FirstOrDefault();
             SearchState = true;

@@ -88,7 +88,11 @@
         </Style>
         <DataTemplate x:Key="GroupHeaderDateTemplate">
             <!-- ReSharper disable Xaml.BindingWithContextNotResolved -->
-            <TextBlock Text="{Binding Name}" Margin="10 5" FontSize="13" FontWeight="Bold" />
+            <StackPanel Orientation="Horizontal" Margin="10 5">
+                <FontAwesomePath Icon="Tag" Height="14" />
+                <TextBlock Text="{Binding Name}" FontWeight="Bold" VerticalAlignment="Center" Margin="5 0" />
+                <TextBlock Text="{Binding ItemCount}" FontWeight="Bold" VerticalAlignment="Center" />
+            </StackPanel>
         </DataTemplate>
     </Window.Resources>
     <Border BorderThickness="0 1 0 0" BorderBrush="#19000000">

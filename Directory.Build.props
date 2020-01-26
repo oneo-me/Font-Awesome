@@ -2,6 +2,17 @@
     <PropertyGroup>
         <TargetFramework>net461</TargetFramework>
         <LangVersion>latest</LangVersion>
-        <Version>20.1.1</Version>
+        <BuildDate>$([System.DateTime]::Now.ToString('yyyy.MM.dd'))</BuildDate>
     </PropertyGroup>
+    <Target Name="AutoVersion" BeforeTargets="PreBuildEvent">
+        <Exec Command="git rev-list HEAD --count --after &quot;$(BuildDate) 00:00&quot;" ConsoleToMSBuild="true">
+            <Output TaskParameter="ConsoleOutput" PropertyName="BuildNumber" />
+        </Exec>
+        <Exec Command="git rev-parse --short HEAD" ConsoleToMSBuild="true">
+            <Output TaskParameter="ConsoleOutput" PropertyName="BuildSHA" />
+        </Exec>
+        <PropertyGroup>
+            <Version>$(BuildDate).$(BuildNumber)-$(BuildSHA)</Version>
+        </PropertyGroup>
+    </Target>
 </Project>

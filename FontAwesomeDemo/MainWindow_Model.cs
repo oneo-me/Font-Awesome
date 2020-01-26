@@ -11,7 +11,7 @@ namespace FontAwesomeDemo
 {
     public class MainWindow_Model : ViewModel
     {
-        public Version Version { get; }
+        public string Version { get; }
         public ICommand CopyIconCommand { get; }
 
         ObservableCollection<FontAwesomeIcon> source;
@@ -56,7 +56,13 @@ namespace FontAwesomeDemo
 
         public MainWindow_Model()
         {
-            Version = Assembly.GetEntryAssembly()?.GetName().Version;
+            var entryAssembly = Assembly.GetEntryAssembly();
+            if (entryAssembly != null)
+            {
+                var informationalVersionAttribute = Attribute.GetCustomAttribute(entryAssembly, typeof(AssemblyInformationalVersionAttribute)) as AssemblyInformationalVersionAttribute;
+                Version = informationalVersionAttribute?.InformationalVersion;
+            }
+
             CopyIconCommand = new Command(obj =>
             {
                 if (!(obj is FontAwesomeIcon icon))

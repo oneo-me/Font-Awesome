@@ -14,8 +14,8 @@
         <FontAwesomeImageSource Icon="GitHub" />
     </Window.Icon>
     <Window.Resources>
-        <DataTemplate x:Key="IconDataTemplate">
-            <FontAwesomeAnimationPath Icon="{Binding}" Fill="#B200ACAF" StrokeThickness="1.5" HorizontalAlignment="Center" StrokeLineJoin="Round" Stroke="#E5000000" />
+        <DataTemplate x:Key="IconDataTemplate" DataType="local:IconInfo">
+            <FontAwesomeAnimationPath Icon="{Binding Icon}" Fill="#B200ACAF" StrokeThickness="1.5" HorizontalAlignment="Center" StrokeLineJoin="Round" Stroke="#E5000000" />
         </DataTemplate>
         <Style x:Key="ListBoxStyle" TargetType="ListBox">
             <Setter Property="ItemsPanel">
@@ -27,16 +27,16 @@
             </Setter>
             <Setter Property="ItemTemplate">
                 <Setter.Value>
-                    <DataTemplate>
+                    <DataTemplate DataType="local:IconInfo">
                         <Grid Margin="5">
                             <Grid.RowDefinitions>
                                 <RowDefinition />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <Border Width="32" Height="32">
-                                <FontAwesomePath Icon="{Binding}" Fill="#CC000000" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                <FontAwesomePath Icon="{Binding Icon}" Fill="#CC000000" HorizontalAlignment="Center" VerticalAlignment="Center" />
                             </Border>
-                            <TextBlock Grid.Row="1" Text="{Binding}" FontSize="10" ToolTip="{Binding}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" />
+                            <TextBlock Grid.Row="1" Text="{Binding Icon}" FontSize="10" ToolTip="{Binding Icon}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" />
                         </Grid>
                     </DataTemplate>
                 </Setter.Value>
@@ -87,8 +87,8 @@
                     <Border Width="120" Height="120">
                         <ContentControl Content="{Binding CurrentIcon}" ContentTemplate="{StaticResource IconDataTemplate}" />
                     </Border>
-                    <TextBlock Margin="0 20" Text="{Binding CurrentIcon}" ToolTip="{Binding CurrentIcon}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" />
-                    <Button Padding="10 8" Command="{Binding CopyIconCommand}" CommandParameter="{Binding CurrentIcon}" HorizontalAlignment="Center">
+                    <TextBlock Margin="0 20" Text="{Binding CurrentIcon.Icon}" ToolTip="{Binding CurrentIcon}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" />
+                    <Button Padding="10 8" Command="{Binding CopyIconCommand}" CommandParameter="{Binding CurrentIcon.Icon}" HorizontalAlignment="Center">
                         <StackPanel Orientation="Horizontal">
                             <FontAwesomePath Icon="Copy" Width="12" Height="12" />
                             <TextBlock Text="Copy Key" Margin="5 0 0 0" />

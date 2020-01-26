@@ -19,13 +19,26 @@ namespace FontAwesome
         }
 
         readonly string path;
+        readonly string category;
 
-        public FontAwesomePathAttribute(string path)
+        public FontAwesomePathAttribute(string category, string path)
         {
+            this.category = category;
             this.path = path;
         }
 
         static readonly Dictionary<FontAwesomeIcon, Geometry> geometries = new Dictionary<FontAwesomeIcon, Geometry>();
+
+        public static string GetCategory(FontAwesomeIcon icon)
+        {
+            if (icon == FontAwesomeIcon.None)
+                return null;
+
+            if (!(GetCustomAttribute(GetField(icon), type) is FontAwesomePathAttribute pathAttribute))
+                return null;
+
+            return pathAttribute.category;
+        }
 
         public static Geometry GetPathData(FontAwesomeIcon icon)
         {

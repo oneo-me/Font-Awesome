@@ -1,11 +1,14 @@
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace FontAwesomeGenerator
 {
     [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
     [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
-    public class IconSvg
+    [SuppressMessage("ReSharper", "CollectionNeverUpdated.Global")]
+    public class Category
     {
-        public string Path { get; set; }
+        public string Label { get; set; }
+        public List<string> Icons { get; set; }
     }
 }

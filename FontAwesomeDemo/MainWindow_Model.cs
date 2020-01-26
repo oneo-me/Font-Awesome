@@ -14,25 +14,25 @@ namespace FontAwesomeDemo
         public string Version { get; }
         public ICommand CopyIconCommand { get; }
 
-        ObservableCollection<FontAwesomeIcon> source;
+        ObservableCollection<IconInfo> source;
 
-        public ObservableCollection<FontAwesomeIcon> Source
+        public ObservableCollection<IconInfo> Source
         {
             get => source;
             set => SetValue(ref source, value);
         }
 
-        ObservableCollection<FontAwesomeIcon> searchIcons;
+        ObservableCollection<IconInfo> searchIcons;
 
-        public ObservableCollection<FontAwesomeIcon> SearchIcons
+        public ObservableCollection<IconInfo> SearchIcons
         {
             get => searchIcons;
             set => SetValue(ref searchIcons, value);
         }
 
-        FontAwesomeIcon currentIcon = FontAwesomeIcon.None;
+        IconInfo currentIcon;
 
-        public FontAwesomeIcon CurrentIcon
+        public IconInfo CurrentIcon
         {
             get => currentIcon;
             set => SetValue(ref currentIcon, value);
@@ -77,7 +77,7 @@ namespace FontAwesomeDemo
 
             var result = Enum.GetValues(typeof(FontAwesomeIcon)).Cast<FontAwesomeIcon>().ToList();
             result.Sort((a, b) => string.CompareOrdinal($"{a}", $"{b}"));
-            Source = new ObservableCollection<FontAwesomeIcon>(result);
+            Source = new ObservableCollection<IconInfo>(result.Select(x => new IconInfo(x)));
 
             OnSearchTextChanged();
         }
@@ -86,7 +86,7 @@ namespace FontAwesomeDemo
         {
             if (string.IsNullOrWhiteSpace(SearchText) || SearchText.Length < 2)
             {
-                SearchIcons = new ObservableCollection<FontAwesomeIcon>();
+                SearchIcons = new ObservableCollection<IconInfo>();
                 CurrentIcon = Source.FirstOrDefault();
                 SearchState = SearchText.Length > 0;
                 return;
@@ -94,7 +94,7 @@ namespace FontAwesomeDemo
 
             var keyWord = SearchText.ToLower();
             var result = source.Where(x => $"{x}".ToLower().Contains(keyWord));
-            SearchIcons = new ObservableCollection<FontAwesomeIcon>(result);
+            SearchIcons = new ObservableCollection<IconInfo>(result);
             CurrentIcon = SearchIcons.FirstOrDefault();
             SearchState = true;
         }

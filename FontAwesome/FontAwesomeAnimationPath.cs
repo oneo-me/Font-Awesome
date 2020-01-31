@@ -11,9 +11,7 @@ namespace FontAwesome
     {
         static FontAwesomeAnimationPath()
         {
-            StrokeProperty.OverrideMetadata(typeof(FontAwesomeAnimationPath), new FrameworkPropertyMetadata(Brushes.Black, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.SubPropertiesDoNotAffectRender));
-            StrokeThicknessProperty.OverrideMetadata(typeof(FontAwesomeAnimationPath), new FrameworkPropertyMetadata(1d, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.SubPropertiesDoNotAffectRender));
-            StretchProperty.OverrideMetadata(typeof(FontAwesomeAnimationPath), new FrameworkPropertyMetadata(Stretch.Uniform, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(FontAwesomeAnimationPath), new FrameworkPropertyMetadata(typeof(FontAwesomeAnimationPath)));
         }
 
         public static readonly DependencyProperty IconProperty =

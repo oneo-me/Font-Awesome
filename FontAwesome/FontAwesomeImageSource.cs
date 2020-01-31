@@ -20,9 +20,7 @@ namespace FontAwesome
             var visual = new DrawingVisual();
 
             using (var dc = visual.RenderOpen())
-            {
                 dc.DrawGeometry(brush, null, geometry);
-            }
 
             return new DrawingImage(visual.Drawing);
         }

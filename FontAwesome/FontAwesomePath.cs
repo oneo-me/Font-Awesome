@@ -8,8 +8,7 @@ namespace FontAwesome
     {
         static FontAwesomePath()
         {
-            FillProperty.OverrideMetadata(typeof(FontAwesomePath), new FrameworkPropertyMetadata(Brushes.Black, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.SubPropertiesDoNotAffectRender));
-            StretchProperty.OverrideMetadata(typeof(FontAwesomePath), new FrameworkPropertyMetadata(Stretch.Uniform, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(FontAwesomePath), new FrameworkPropertyMetadata(typeof(FontAwesomePath)));
         }
 
         public static readonly DependencyProperty IconProperty =

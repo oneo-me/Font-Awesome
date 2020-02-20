@@ -3,18 +3,7 @@
         <TargetFramework>net461</TargetFramework>
         <LangVersion>latest</LangVersion>
     </PropertyGroup>
-    <Target Name="AutoVersion" BeforeTargets="PreBuildEvent">
-        <Exec Command="git rev-list HEAD --count --after &quot;$([System.DateTime]::Now.ToString('yyyy.MM.dd')) 00:00&quot;" ConsoleToMSBuild="true">
-            <Output TaskParameter="ConsoleOutput" PropertyName="BuildNumber" />
-        </Exec>
-        <Exec Command="git rev-list HEAD --count" ConsoleToMSBuild="true">
-            <Output TaskParameter="ConsoleOutput" PropertyName="TotalBuildNumber" />
-        </Exec>
-        <Exec Command="git rev-parse --short HEAD" ConsoleToMSBuild="true">
-            <Output TaskParameter="ConsoleOutput" PropertyName="BuildSHA" />
-        </Exec>
-        <PropertyGroup>
-            <Version>$([System.DateTime]::Now.ToString('yy.M.d')).$(BuildNumber)-$(BuildSHA)-$(TotalBuildNumber)</Version>
-        </PropertyGroup>
-    </Target>
+    <ItemGroup>
+        <PackageReference Include="AutoVersionTask" Version="1.0.0" PrivateAssets="All" />
+    </ItemGroup>
 </Project>

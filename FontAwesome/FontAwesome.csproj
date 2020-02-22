@@ -1,5 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
     <PropertyGroup>
         <UseWpf>true</UseWpf>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Authors>ONEO</Authors>
+        <Description>FontAwesome For WPF</Description>
     </PropertyGroup>
 </Project>

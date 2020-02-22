@@ -4,5 +4,6 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Authors>ONEO</Authors>
         <Description>FontAwesome For WPF</Description>
+        <PackageId>FontAwesomeForWPF</PackageId>
     </PropertyGroup>
 </Project>

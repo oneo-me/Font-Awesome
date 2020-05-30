@@ -4,6 +4,6 @@
         <LangVersion>latest</LangVersion>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="AutoVersionTask" Version="1.0.0" PrivateAssets="All" />
+        <PackageReference Include="AutoVersionTask" Version="3.6.0" PrivateAssets="All" />
     </ItemGroup>
 </Project>

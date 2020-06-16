@@ -1,5 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
     <PropertyGroup>
+        <TargetFrameworks>net461;netcoreapp3.1;netcoreapp5.0</TargetFrameworks>
         <UseWpf>true</UseWpf>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Authors>ONEO</Authors>

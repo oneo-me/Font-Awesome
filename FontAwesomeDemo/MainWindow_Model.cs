@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 using FontAwesome;
@@ -56,16 +55,12 @@ namespace FontAwesomeDemo
 
         public MainWindow_Model()
         {
-            var entryAssembly = Assembly.GetEntryAssembly();
-            if (entryAssembly != null)
-            {
-                var informationalVersionAttribute = Attribute.GetCustomAttribute(entryAssembly, typeof(AssemblyInformationalVersionAttribute)) as AssemblyInformationalVersionAttribute;
-                Version = informationalVersionAttribute?.InformationalVersion;
-            }
+            var type = typeof(FontAwesomeKey);
+            Version = type.Assembly.GetName().Version.ToString();
 
             CopyIconCommand = new Command(obj =>
             {
-                if (!(obj is FontAwesomeIcon icon))
+                if (!(obj is FontAwesomeKey icon))
                     return;
                 var iconStr = $"{icon}";
                 Clipboard.SetText(iconStr);
@@ -75,7 +70,7 @@ namespace FontAwesomeDemo
                 MessageBox.Show(mainWindow, $"Copy \"{iconStr}\" To Clipboard {(Clipboard.GetText() == iconStr ? "Success" : "Fail")}!", nameof(FontAwesomeDemo), MessageBoxButton.OK, MessageBoxImage.Information);
             });
 
-            var result = Enum.GetValues(typeof(FontAwesomeIcon)).Cast<FontAwesomeIcon>().ToList();
+            var result = Enum.GetValues(type).Cast<FontAwesomeKey>().ToList();
             result.Sort((a, b) => string.CompareOrdinal($"{a}", $"{b}"));
             Source = new ObservableCollection<IconInfo>(result.Select(x => new IconInfo(x)));
 
@@ -93,7 +88,7 @@ namespace FontAwesomeDemo
             }
 
             var keyWord = SearchText.ToLower();
-            var result = source.Where(x => $"{x.Icon}".ToLower().Contains(keyWord));
+            var result = source.Where(x => $"{x.Key}".ToLower().Contains(keyWord));
             SearchIcons = new ObservableCollection<IconInfo>(result);
             CurrentIcon = SearchIcons.FirstOrDefault();
             SearchState = true;

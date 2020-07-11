@@ -16,7 +16,7 @@ namespace FontAwesomeGenerator
 
             var json = Path.Combine(solution, "Font/metadata/icons.json");
             var yml = Path.Combine(solution, "Font/metadata/categories.yml");
-            var save = Path.Combine(solution, "FontAwesome/FontAwesomeIcon.cs");
+            var save = Path.Combine(solution, "FontAwesome/FontAwesomeKey.cs");
 
             var deserializer = new DeserializerBuilder()
                 .WithNamingConvention(CamelCaseNamingConvention.Instance)
@@ -36,14 +36,14 @@ namespace FontAwesomeGenerator
             sb.AppendLine("    [SuppressMessage(\"ReSharper\", \"UnusedMember.Global\")]");
             sb.AppendLine("    [SuppressMessage(\"ReSharper\", \"IdentifierTypo\")]");
             sb.AppendLine("    [SuppressMessage(\"ReSharper\", \"InconsistentNaming\")]");
-            sb.AppendLine("    public enum FontAwesomeIcon");
+            sb.AppendLine("    public enum FontAwesomeKey");
             sb.AppendLine("    {");
             sb.AppendLine("        None,");
 
             foreach (var info in infos)
             {
                 sb.AppendLine("        ");
-                sb.AppendLine($"        [FontAwesomePath(\"{categories.Values.FirstOrDefault(x => x.Icons.Contains(info.Key))?.Label ?? "Other"}\", \"{info.Value.GetPath()}\")]");
+                sb.AppendLine($"        [FontAwesomeInfo(\"{categories.Values.FirstOrDefault(x => x.Icons.Contains(info.Key))?.Label ?? "Other"}\", \"{info.Value.GetPath()}\")]");
                 sb.AppendLine($"        {info.Value.GetKey()},");
             }
 

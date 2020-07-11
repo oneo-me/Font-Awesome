@@ -11,7 +11,7 @@
         <local:MainWindow_Model />
     </Window.DataContext>
     <Window.Icon>
-        <FontAwesomeImageSource Icon="GitHub" />
+        <FontAwesomeIconSource Icon="GitHub" />
     </Window.Icon>
     <Window.Resources>
         <CollectionViewSource x:Key="SourceView" Source="{Binding Source}">
@@ -25,7 +25,7 @@
             </CollectionViewSource.GroupDescriptions>
         </CollectionViewSource>
         <DataTemplate x:Key="IconDataTemplate" DataType="local:IconInfo">
-            <FontAwesomeAnimationPath Icon="{Binding Icon}" Fill="#B200ACAF" StrokeThickness="1.5" HorizontalAlignment="Center" StrokeLineJoin="Round" Stroke="#E5000000" />
+            <FontAwesomeIconAnimation Key="{Binding Key}" Fill="#B200ACAF" StrokeThickness="1.5" HorizontalAlignment="Center" StrokeLineJoin="Round" Stroke="#E5000000" />
         </DataTemplate>
         <Style x:Key="ListBoxStyle" TargetType="ListBox">
             <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
@@ -45,9 +45,9 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <Border Width="32" Height="32">
-                                <FontAwesomePath Icon="{Binding Icon}" Fill="#CC000000" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                <FontAwesomeIcon Key="{Binding Key}" Fill="#CC000000" HorizontalAlignment="Center" VerticalAlignment="Center" />
                             </Border>
-                            <TextBlock Grid.Row="1" Text="{Binding Icon}" FontSize="10" ToolTip="{Binding Icon}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" />
+                            <TextBlock Grid.Row="1" Text="{Binding Key}" FontSize="10" ToolTip="{Binding Key}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" />
                         </Grid>
                     </DataTemplate>
                 </Setter.Value>
@@ -89,7 +89,7 @@
         <DataTemplate x:Key="GroupHeaderDateTemplate">
             <!-- ReSharper disable Xaml.BindingWithContextNotResolved -->
             <StackPanel Orientation="Horizontal" Margin="10 5">
-                <FontAwesomePath Icon="Tag" Height="14" />
+                <FontAwesomeIcon Key="Tag" Height="14" />
                 <TextBlock Text="{Binding Name}" FontWeight="Bold" VerticalAlignment="Center" Margin="5 0" />
                 <TextBlock Text="{Binding ItemCount}" FontWeight="Bold" VerticalAlignment="Center" />
             </StackPanel>
@@ -106,10 +106,10 @@
                     <Border Width="120" Height="120">
                         <ContentControl Content="{Binding CurrentIcon}" ContentTemplate="{StaticResource IconDataTemplate}" />
                     </Border>
-                    <TextBlock Margin="0 20" Text="{Binding CurrentIcon.Icon}" ToolTip="{Binding CurrentIcon}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" />
-                    <Button Padding="10 8" Command="{Binding CopyIconCommand}" CommandParameter="{Binding CurrentIcon.Icon}" HorizontalAlignment="Center">
+                    <TextBlock Margin="0 20" Text="{Binding CurrentIcon.Key}" ToolTip="{Binding CurrentIcon}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" />
+                    <Button Padding="10 8" Command="{Binding CopyIconCommand}" CommandParameter="{Binding CurrentIcon.Key}" HorizontalAlignment="Center">
                         <StackPanel Orientation="Horizontal">
-                            <FontAwesomePath Icon="Copy" Width="12" Height="12" />
+                            <FontAwesomeIcon Key="Copy" Width="12" Height="12" />
                             <TextBlock Text="Copy Key" Margin="5 0 0 0" />
                         </StackPanel>
                     </Button>
@@ -149,7 +149,7 @@
                             <ColumnDefinition />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <FontAwesomePath Grid.Column="0" Icon="Search" Height="12" Margin="10 0 0 0" />
+                        <FontAwesomeIcon Grid.Column="0" Key="Search" Height="12" Margin="10 0 0 0" />
                         <TextBox Grid.Column="1" BorderThickness="0" Padding="10" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
                         <TextBlock Grid.Column="2" Text="{Binding Source.Count}" Margin="0 0 10 0" VerticalAlignment="Center" Visibility="{Binding SearchState, Converter={converters:Bool2VisibilityConverter Reversion=True}}" />
                         <TextBlock Grid.Column="2" Text="{Binding SearchIcons.Count}" Margin="0 0 10 0" VerticalAlignment="Center" Visibility="{Binding SearchState, Converter={converters:Bool2VisibilityConverter}}" />

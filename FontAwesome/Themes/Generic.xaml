@@ -2,11 +2,11 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:FontAwesome">
-    <Style TargetType="local:FontAwesomePath">
+    <Style TargetType="local:FontAwesomeIcon">
         <Setter Property="Stretch" Value="Uniform" />
         <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource Self}, Path=(TextElement.Foreground)}" />
     </Style>
-    <Style TargetType="local:FontAwesomeAnimationPath">
+    <Style TargetType="local:FontAwesomeIconAnimation">
         <Setter Property="Stretch" Value="Uniform" />
         <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource Self}, Path=(TextElement.Foreground)}" />
         <Setter Property="StrokeThickness" Value="1" />

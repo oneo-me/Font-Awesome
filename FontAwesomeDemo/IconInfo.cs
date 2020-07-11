@@ -4,13 +4,13 @@ namespace FontAwesomeDemo
 {
     public class IconInfo
     {
-        public FontAwesomeIcon Icon { get; }
+        public FontAwesomeKey Key { get; }
         public string Category { get; }
 
-        public IconInfo(FontAwesomeIcon icon)
+        public IconInfo(FontAwesomeKey key)
         {
-            Icon = icon;
-            Category = FontAwesomePathAttribute.GetCategory(icon) ?? "None";
+            Key = key;
+            Category = FontAwesomeInfoAttribute.GetCategory(key) ?? "None";
         }
     }
 }

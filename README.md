@@ -1,9 +1,10 @@
 # Font-Awesome
-Font Awesome for WPF
+[Font Awesome](https://github.com/FortAwesome/Font-Awesome) for WPF
 
 ![Screenshot](Screenshot.png)
 
-```xml
-<FontAwesomePath Icon="Github" />
-<FontAwesomeAnimationPath Icon="Github" />
+```xaml
+<FontAwesomeIcon Icon="Github" />
+<FontAwesomeIconSource Icon="Github" />
+<FontAwesomeIconAnimation Icon="Github" />
 ```

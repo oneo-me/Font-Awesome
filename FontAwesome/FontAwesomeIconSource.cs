@@ -4,9 +4,9 @@ using System.Windows.Media;
 
 namespace FontAwesome
 {
-    public class FontAwesomeImageSource : MarkupExtension
+    public class FontAwesomeIconSource : MarkupExtension
     {
-        public FontAwesomeIcon Icon { get; set; }
+        public FontAwesomeKey Icon { get; set; }
         public Brush Brush { get; set; } = Brushes.Black;
 
         public override object ProvideValue(IServiceProvider serviceProvider)
@@ -14,9 +14,9 @@ namespace FontAwesome
             return Create(Icon, Brush);
         }
 
-        public static ImageSource Create(FontAwesomeIcon icon, Brush brush)
+        public static ImageSource Create(FontAwesomeKey key, Brush brush)
         {
-            var geometry = FontAwesomePathAttribute.GetPathData(icon) ?? Geometry.Empty;
+            var geometry = FontAwesomeInfoAttribute.GetPathData(key) ?? Geometry.Empty;
             var visual = new DrawingVisual();
 
             using (var dc = visual.RenderOpen())

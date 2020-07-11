@@ -7,31 +7,31 @@ using System.Windows.Shapes;
 
 namespace FontAwesome
 {
-    public class FontAwesomeAnimationPath : Shape
+    public class FontAwesomeIconAnimation : Shape
     {
-        static FontAwesomeAnimationPath()
+        static FontAwesomeIconAnimation()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(FontAwesomeAnimationPath), new FrameworkPropertyMetadata(typeof(FontAwesomeAnimationPath)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(FontAwesomeIconAnimation), new FrameworkPropertyMetadata(typeof(FontAwesomeIconAnimation)));
         }
 
-        public static readonly DependencyProperty IconProperty =
-            DependencyProperty.Register(nameof(Icon), typeof(FontAwesomeIcon), typeof(FontAwesomeAnimationPath), new FrameworkPropertyMetadata(FontAwesomeIcon.None, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender, OnIconChanged));
+        public static readonly DependencyProperty KeyProperty =
+            DependencyProperty.Register(nameof(Key), typeof(FontAwesomeKey), typeof(FontAwesomeIconAnimation), new FrameworkPropertyMetadata(FontAwesomeKey.None, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender, OnIconChanged));
 
-        public FontAwesomeIcon Icon
+        public FontAwesomeKey Key
         {
-            get => (FontAwesomeIcon)GetValue(IconProperty);
-            set => SetValue(IconProperty, value);
+            get => (FontAwesomeKey)GetValue(KeyProperty);
+            set => SetValue(KeyProperty, value);
         }
 
         static void OnIconChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var animationPath = (FontAwesomeAnimationPath)d;
-            animationPath.data = FontAwesomePathAttribute.GetPathData(animationPath.Icon) ?? Geometry.Empty;
+            var animationPath = (FontAwesomeIconAnimation)d;
+            animationPath.data = FontAwesomeInfoAttribute.GetPathData(animationPath.Key) ?? Geometry.Empty;
             animationPath.UpdatePath();
         }
 
         public static readonly DependencyProperty DurationProperty =
-            DependencyProperty.Register(nameof(Duration), typeof(int), typeof(FontAwesomeAnimationPath), new FrameworkPropertyMetadata(1000));
+            DependencyProperty.Register(nameof(Duration), typeof(int), typeof(FontAwesomeIconAnimation), new FrameworkPropertyMetadata(1000));
 
         public int Duration
         {
@@ -47,7 +47,7 @@ namespace FontAwesome
         Geometry data = Geometry.Empty;
         Storyboard storyboard;
 
-        public FontAwesomeAnimationPath()
+        public FontAwesomeIconAnimation()
         {
             Loaded += OnLoaded;
         }
